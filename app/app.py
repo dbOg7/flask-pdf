@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template
 from xhtml2pdf import pisa
 from io import StringIO, BytesIO
 
@@ -21,12 +21,12 @@ class Pdf():
         return pdf.getvalue()
 
 @app.route('/pdf',  methods=['GET'])
-def view_invoice():
+def generate_pdf():
 
     html = render_template('home.html')
     file_class = Pdf()
     pdf = file_class.render_pdf('home.html',html)
     headers = {
         'content-type': 'application.pdf',
-        'content-disposition': 'attachment; filename=certificate.pdf'}
+        'content-disposition': 'attachment; filename=yourpdf.pdf'}
     return pdf, 200, headers
